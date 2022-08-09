@@ -13,7 +13,7 @@ const req = https.get(url, (res) => {
         const splitData = htmlData.slice(htmlData.indexOf("latest-stories__item"), htmlData.lastIndexOf("latest-stories__item"))
         const anchorRegex = /<a\s+href=(["'])(.*?)+/g;
         const links = splitData.match(anchorRegex)
-        const titleRegex = /<h3\s+class=[" '](.*?)+\/h3>/g;
+        const titleRegex = /<h3\s+class=["'](.*?)+\/h3>/g;
 
         const headline = splitData.match(titleRegex);
 
@@ -37,7 +37,7 @@ const req = https.get(url, (res) => {
         console.log(output)
         const server = http.createServer((request, response) => {
             if (request.url === "/") {
-                response.write("Hello");
+                response.write("Hello go to http://localhost:5000/getTimeStories for getting the latest stories.");
                 response.end();
             }
             if (request.url === "/getTimeStories") {
