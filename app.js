@@ -4,24 +4,24 @@ const url = `https://time.com/`;
 const port = 5000;
 
 const req = https.get(url, (res) => {
-    const output =[];
+    const output = [];
     let htmlData = "";
-    res.on("data", d => {
-        htmlData += d
+    res.on("data", data => {
+        htmlData += data
     })
     res.on("end", () => {
         const splitData = htmlData.slice(htmlData.indexOf("latest-stories__item"), htmlData.lastIndexOf("latest-stories__item"))
-        const linkRx = /<a\s+href=(["'])(.*?)+/g;
-        const links = splitData.match(linkRx)
-        const hreg = /<h3\s+class=[" '](.*?)+\/h3>/g;
+        const anchorRegex = /<a\s+href=(["'])(.*?)+/g;
+        const links = splitData.match(anchorRegex)
+        const titleRegex = /<h3\s+class=[" '](.*?)+\/h3>/g;
 
-        const head = splitData.match(hreg);
+        const headline = splitData.match(titleRegex);
 
         const title = [];
         const link = [];
 
-        for (let i = 0; i < head.length; i++) {
-            title.push(head[i].slice(42, head[i].length - 5))
+        for (let i = 0; i < headline.length; i++) {
+            title.push(headline[i].slice(42, headline[i].length - 5))
         }
 
         for (let i = 0; i < links.length; i++) {
